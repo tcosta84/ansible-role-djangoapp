@@ -1,0 +1,43 @@
+---
+
+- name: Pull source from GIT repository
+  sudo: yes
+  sudo_user: "{{ djangoapp_user }}"
+  git: repo={{ djangoapp_repo_url }} dest={{ djangoapp_source_dir }} 
+       version={{ djangoapp_repo_branch }} force=yes update=yes accept_hostkey=yes 
+       key_file=/home/{{ djangoapp_user }}/.ssh/deploy_key
+  notify: restart supervisor programs
+
+- name: Set environment variables
+  sudo: yes
+  sudo_user: "{{ djangoapp_user }}"
+  template: src=env.j2 dest={{ djangoapp_base_dir }}/.env group={{ djangoapp_group }} 
+        owner={{ djangoapp_user }}
+
+- name: Ensure virtualenv build dir is not present
+  file: dest={{ djangoapp_virtualenv_dir }}/build state=absent
+
+- name: Update requirements
+  sudo: yes
+  sudo_user: "{{ djangoapp_user }}"
+  pip: requirements={{ djangoapp_requirements_file }} virtualenv={{ djangoapp_virtualenv_dir }}
+
+- name: Run database migrations
+  sudo: yes
+  sudo_user: "{{ djangoapp_user }}"
+  django_manage: command=migrate app_path={{ djangoapp_base_dir }} 
+                 virtualenv={{ djangoapp_virtualenv_dir }}
+
+- name: Collect static files
+  sudo: yes
+  sudo_user: "{{ djangoapp_user }}"
+  django_manage: command=collectstatic app_path={{ djangoapp_base_dir }}
+                 virtualenv={{ djangoapp_virtualenv_dir }}
+
+- name: Load fixtures
+  sudo: yes
+  sudo_user: "{{ djangoapp_user }}"
+  django_manage: command=loaddata fixtures="{{ django_fixtures }}" 
+                 app_path={{ djangoapp_base_dir }}
+                 virtualenv={{ djangoapp_virtualenv_dir }}
+  when: django_fixtures is defined and django_fixtures|length > 0

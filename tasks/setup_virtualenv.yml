@@ -1,0 +1,19 @@
+---
+
+- name: Virtualenv | Ensure virtualenv is installed
+  pip:
+    name=virtualenv
+    state=present
+
+- name: Virtualenv | Ensure virtualenv is created
+  command:
+    virtualenv {{ djangoapp_virtualenv_dir }} --no-site-packages
+    creates={{ djangoapp_virtualenv_dir }}/bin/activate
+
+- name: Virtualenv | Ensure virtualenv has the right permissions
+  file:
+    path={{ djangoapp_virtualenv_dir }}
+    recurse=yes
+    owner={{ djangoapp_user }}
+    group={{ djangoapp_group }}
+    state=directory

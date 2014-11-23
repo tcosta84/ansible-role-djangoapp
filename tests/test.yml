@@ -1,0 +1,17 @@
+---
+
+- hosts: example
+  remote_user: root
+  vars:
+    - supervisor_web_host: "{{ inventory_hostname }}"
+    - supervisor_web_port: 9001
+    - supervisor_web_user: admin
+    - supervisor_web_pass: 12345
+    # - djangoapp_domain: localhost
+    # - djangoapp_envvars:
+    #     DEBUG: "True"
+    #     SECRET_KEY: "oh8b$!qg(j5-q)0^6awq4#n$a%3he@fa69_0&4=p6r@2%a1*js"
+    #     STATIC_ROOT: "{{ djangoapp_static_dir }}"
+    #     MEDIA_ROOT: "{{ djangoapp_media_dir }}"
+  roles:
+    - ../../ansible-role-djangoapp

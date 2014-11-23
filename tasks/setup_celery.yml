@@ -1,0 +1,15 @@
+---
+
+- name: Celery | Ensure Celery is installed
+  pip: name=celery virtualenv={{ djangoapp_virtualenv_dir }} state=present
+
+- name: Celery | Ensure start file is installed
+  template: src=celery_start.j2 dest={{ djangoapp_virtualenv_dir }}/bin/celery_start 
+            owner={{ djangoapp_user }} group={{ djangoapp_group }} mode=0755 backup=yes
+  notify: restart supervisor programs
+
+- name: Celery | Add Celery to Supervisor
+  template: src=supervisor_celery.j2 dest={{ supervisor_programs_dir }}/celery.conf
+  notify:
+    - reread supervisor
+    - update supervisor

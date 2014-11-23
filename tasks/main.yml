@@ -1,0 +1,18 @@
+---
+
+- include: setup_app.yml
+- include: setup_virtualenv.yml
+
+- include: setup_gunicorn.yml
+
+- include: setup_celery.yml
+  when: djangoapp_enable_celery
+
+- include: setup_celerybeat.yml
+  when: djangoapp_enable_celerybeat
+
+- include: setup_flower.yml
+  when: djangoapp_enable_flower
+
+- include: deploy_app.yml tags=deploy
+- include: setup_nginx.yml

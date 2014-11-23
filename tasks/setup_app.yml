@@ -1,0 +1,25 @@
+---
+
+- name: Ensure group is created
+  group: name={{ djangoapp_group }} system=yes state=present
+
+- name: Ensure user is created
+  user: name={{ djangoapp_user }} password={{ djangoapp_pass }} system=yes 
+        group={{ djangoapp_group }} state=present
+
+- name: Update sudoers
+  template: src=sudoers.j2 dest=/etc/sudoers backup=yes
+
+- name: Ensure .ssh, source, static, media and logs directories exist
+  file: dest={{ item }} mode=755 owner={{ djangoapp_user }} group={{ djangoapp_group }} 
+        state=directory
+  with_items:
+    - "/home/{{ djangoapp_user }}/.ssh"
+    - "{{ djangoapp_source_dir }}"
+    - "{{ djangoapp_static_dir }}"
+    - "{{ djangoapp_media_dir }}"
+    - "{{ djangoapp_logs_dir }}"
+
+- name: Ensure git deploy key is installed
+  copy: content="{{ djangoapp_repo_deploy_key }}" dest=/home/{{ djangoapp_user }}/.ssh/deploy_key 
+        mode=0600 group={{ djangoapp_group }} owner={{ djangoapp_user }}

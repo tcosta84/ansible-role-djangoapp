@@ -1,0 +1,20 @@
+---
+
+galaxy_info:
+  author: Thiago Costa
+  description: Install minimal Django App served by Gunicorn (application server) behind Nginx (reverse proxy) on CentOS
+  company: 
+  license: license (GPLv2, CC-BY, etc)
+  min_ansible_version: 1.7
+  platforms:
+  - name: EL
+    versions:
+    - 6
+  categories:
+  - development
+  - web
+
+dependencies:
+  - { role: tcosta84.nginx }
+  - { role: tcosta84.python }
+  - { role: tcosta84.supervisor }
