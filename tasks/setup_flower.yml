@@ -1,6 +1,7 @@
 ---
-- name: Flower | Ensure Flower is installed
-  pip: name=flower virtualenv={{ djangoapp_virtualenv_dir }} state=present
+
+# - name: Flower | Ensure Flower is installed
+#   pip: name=flower virtualenv={{ djangoapp_virtualenv_dir }} state=present
 
 - name: Flower | Ensure db dir is present
   file: dest={{ flower_db_dir }} owner={{ djangoapp_user }} group={{ djangoapp_group }} 

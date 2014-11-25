@@ -1,8 +1,8 @@
 ---
 
-- name: Celery Beat | Ensure schedule dir is present
-  file: dest={{ celerybeat_schedule_dir }} owner={{ djangoapp_user }} group={{ djangoapp_group }}
-        state=directory
+# - name: Celery Beat | Ensure schedule dir is present
+#   file: dest={{ celerybeat_schedule_dir }} owner={{ djangoapp_user }} group={{ djangoapp_group }}
+#         state=directory
 
 - name: Celery Beat | Ensure start file is installed
   template: src=celerybeat_start.j2 dest={{ djangoapp_virtualenv_dir }}/bin/celerybeat_start 
