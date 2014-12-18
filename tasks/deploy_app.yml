@@ -13,6 +13,7 @@
   sudo_user: "{{ djangoapp_user }}"
   template: src=env.j2 dest={{ djangoapp_base_dir }}/.env group={{ djangoapp_group }} 
         owner={{ djangoapp_user }}
+  notify: restart supervisor programs
 
 - name: Ensure virtualenv build dir is not present
   file: dest={{ djangoapp_virtualenv_dir }}/build state=absent

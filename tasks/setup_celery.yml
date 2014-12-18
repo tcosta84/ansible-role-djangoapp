@@ -1,7 +1,7 @@
 ---
 
-- name: Celery | Ensure Celery is installed
-  pip: name=celery virtualenv={{ djangoapp_virtualenv_dir }} state=present
+# - name: Celery | Ensure Celery is installed
+#   pip: name=celery virtualenv={{ djangoapp_virtualenv_dir }} state=present
 
 - name: Celery | Ensure start file is installed
   template: src=celery_start.j2 dest={{ djangoapp_virtualenv_dir }}/bin/celery_start 

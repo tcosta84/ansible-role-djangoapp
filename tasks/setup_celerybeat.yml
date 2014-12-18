@@ -1,16 +1,16 @@
 ---
 
-- name: Celery Beat | Ensure schedule dir is present
-  file: dest={{ celery_beat_schedule_dir }} owner={{ djangoapp_user }} group={{ djangoapp_group }}
-        state=directory
+# - name: Celery Beat | Ensure schedule dir is present
+#   file: dest={{ celerybeat_schedule_dir }} owner={{ djangoapp_user }} group={{ djangoapp_group }}
+#         state=directory
 
 - name: Celery Beat | Ensure start file is installed
-  template: src=celery_beat_start.j2 dest={{ djangoapp_virtualenv_dir }}/bin/celerybeat_start 
+  template: src=celerybeat_start.j2 dest={{ djangoapp_virtualenv_dir }}/bin/celerybeat_start 
             owner={{ djangoapp_user }} group={{ djangoapp_group }} mode=0755 backup=yes
   notify: restart supervisor programs
 
 - name: Celery Beat | Add Celery Beat to Supervisor
-  template: src=supervisor_celery_beat.j2 dest={{ supervisor_programs_dir }}/celerybeat.conf
+  template: src=supervisor_celerybeat.j2 dest={{ supervisor_programs_dir }}/celerybeat.conf
   notify:
     - reread supervisor
     - update supervisor

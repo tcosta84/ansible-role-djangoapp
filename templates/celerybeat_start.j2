@@ -6,5 +6,5 @@ source {{ djangoapp_virtualenv_dir }}/bin/activate
 
 exec celery beat -A {{ djangoapp_project_module }} \
     --pidfile= \
-    --schedule={{ celery_beat_schedule_file }} \
+    --schedule={{ celerybeat_schedule_file }} \
     --loglevel=debug
