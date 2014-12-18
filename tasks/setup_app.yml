@@ -1,12 +1,12 @@
 ---
 
-- name: Ensure group is created
-  group: name={{ djangoapp_group }} system=yes state=present
-
-- name: Ensure user is created
-  user: name={{ djangoapp_user }} password={{ djangoapp_pass }} system=yes 
-        group={{ djangoapp_group }} state=present
-
+# - name: Ensure group is created
+#   group: name={{ djangoapp_group }} system=yes state=present
+#
+# - name: Ensure user is created
+#   user: name={{ djangoapp_user }} password={{ djangoapp_pass }} system=yes 
+#         group={{ djangoapp_group }} state=present
+#
 - name: Update sudoers
   template: src=sudoers.j2 dest=/etc/sudoers backup=yes
 
