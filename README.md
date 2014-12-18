@@ -149,8 +149,8 @@ To install the default app (for demonstration purposes only):
 
 To install your own app, you should override at least 2 variables:
 
-    * django_repo_url
-    * django_deploy_key
+    * djangoapp_repo_url
+    * djangoapp_repo_deploy_key
 
 Example:
     
